@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E&L Coffeedent | Crafted with Love, Served with Soul</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-cream: #F5EFE6;
+            --primary-espresso: #2C1A0E;
+            --accent-gold: #C49A3C;
+            --secondary-roast: #7B5B3A;
+            --text-dark: #1A1008;
+            --white: #FFFFFF;
+            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background-color: var(--bg-cream);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        h1, h2, h3, h4, .serif {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* --- UI Components --- */
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid transparent;
+            font-size: 0.95rem;
+            letter-spacing: 0.02em;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-gold);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background-color: #B28B36;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(196, 154, 60, 0.2);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            border-color: var(--bg-cream);
+            color: var(--bg-cream);
+        }
+
+        .btn-ghost:hover {
+            background: var(--bg-cream);
+            color: var(--primary-espresso);
+            transform: translateY(-2px);
+        }
+
+        .section-padding {
+            padding: 6rem 1.5rem;
+        }
+
+        @media (min-width: 1024px) {
+            .section-padding {
+                padding: 10rem 4rem;
+            }
+        }
+
+        /* --- Grain Texture Overlay --- */
+        .grain::before {
+            content: "";
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.04;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        /* --- Sticky Navigation --- */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1.5rem 1.5rem;
+            transition: var(--transition);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav.scrolled {
+            background-color: rgba(245, 239, 230, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 1.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-espresso);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: none;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--primary-espresso);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-gold);
+        }
+
+        .nav-cta {
+            display: none;
+        }
+
+        @media (min-width: 1024px) {
+            .nav-links, .nav-cta {
+                display: flex;
+            }
+            nav {
+                padding: 1.5rem 4rem;
+            }
+            nav.scrolled {
+                padding: 1rem 4rem;
+            }
+        }
+
+        /* --- Mobile Nav --- */
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            z-index: 1100;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 2px;
+            background-color: var(--primary-espresso);
+            transition: var(--transition);
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 80%;
+            max-width: 300px;
+            height: 100vh;
+            background-color: var(--white);
+            z-index: 1050;
+            display: flex;
+            flex-direction: column;
+            padding: 6rem 2rem;
+            gap: 2rem;
+            transition: var(--transition);
+            box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+        }
+
+        .mobile-menu.open {
+            right: 0;
+        }
+
+        .mobile-menu a {
+            text-decoration: none;
+            color: var(--primary-espresso);
+            font-size: 1.5rem;
+            font-family: 'Playfair Display', serif;
+        }
+
+        @media (min-width: 1024px) {
+            .hamburger { display: none; }
+        }
+
+        /* --- Hero Section --- */
+        #hero {
+            height: 100vh;
+            background-color: var(--primary-espresso);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            color: var(--bg-cream);
+            padding: 0 1.5rem;
+        }
+
+        .hero-content {
+            z-index: 10;
+            max-width: 800px;
+        }
+
+        #hero h1 {
+            font-size: clamp(3rem, 10vw, 6rem);
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s forwards 0.5s;
+        }
+
+        #hero p {
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
+            margin-bottom: 2.5rem;
+            opacity: 0.8;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s forwards 0.7s;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            opacity: 0;
+            animation: fadeIn 1s forwards 1s;
+        }
+
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        /* Steam Animation */
+        .steam-container {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 40px;
+        }
+
+        .steam {
+            width: 4px;
+            height: 15vh;
+            background: linear-gradient(to top, rgba(245, 239, 230, 0.2), transparent);
+            filter: blur(10px);
+            border-radius: 50%;
+            animation: steamAnim 4s infinite ease-in-out;
+        }
+
+        @keyframes steamAnim {
+            0%, 100% { transform: translateY(0) scaleX(1); opacity: 0; }
+            50% { transform: translateY(-50px) scaleX(4); opacity: 0.3; }
+        }
+
+        /* --- Featured Highlights --- */
+        #highlights {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 768px) {
+            #highlights {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .highlight-card {
+            background-color: var(--white);
+            padding: 3rem 2rem;
+            text-align: center;
+            border-radius: 8px;
+            transition: var(--transition);
+            border: 1px solid rgba(44, 26, 14, 0.05);
+        }
+
+        .highlight-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+        }
+
+        .highlight-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .highlight-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .highlight-card p {
+            color: var(--secondary-roast);
+            font-size: 0.95rem;
+        }
+
+        /* --- Menu Section --- */
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+            padding: 0 1rem;
+        }
+
+        .tab-btn {
+            font-family: inherit;
+            background: rgba(44, 26, 14, 0.05);
+            border: 1px solid transparent;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--secondary-roast);
+            cursor: pointer;
+            padding: 0.6rem 1.2rem;
+            border-radius: 50px;
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .tab-btn.active {
+            background-color: var(--primary-espresso);
+            color: var(--white);
+            border-color: var(--primary-espresso);
+        }
+
+        .tab-btn:hover:not(.active) {
+            background-color: rgba(44, 26, 14, 0.1);
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            min-height: 400px;
+        }
+
+        @media (min-width: 768px) {
+            .menu-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .menu-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .menu-item {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            transition: var(--transition);
+            border: 1px solid rgba(44, 26, 14, 0.03);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-item::before {
+            content: "POPULAR";
+            position: absolute;
+            top: 10px;
+            right: -25px;
+            background: var(--accent-gold);
+            color: white;
+            font-size: 0.6rem;
+            font-weight: 700;
+            padding: 4px 30px;
+            transform: rotate(45deg);
+            display: none;
+        }
+
+        .menu-item.is-popular::before {
+            display: block;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(44, 26, 14, 0.08);
+            border-color: var(--accent-gold);
+        }
+
+        .item-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--bg-cream);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--primary-espresso);
+        }
+
+        .item-info {
+            flex-grow: 1;
+        }
+
+        .item-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+            color: var(--primary-espresso);
+        }
+
+        .item-prices {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .price-tag {
+            background: var(--bg-cream);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--accent-gold);
+        }
+
+        .price-label {
+            font-size: 0.7rem;
+            color: var(--secondary-roast);
+            font-weight: 400;
+            margin-right: 4px;
+        }
+
+        /* --- Our Story Section --- */
+        #story {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        @media (min-width: 1024px) {
+            #story {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .story-visual {
+            padding: 2rem;
+            background: var(--white);
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .quote-block {
+            font-size: 2.5rem;
+            line-height: 1.2;
+            color: var(--primary-espresso);
+            margin-bottom: 2rem;
+        }
+
+        .story-text p {
+            margin-bottom: 1.5rem;
+            color: var(--secondary-roast);
+            font-size: 1.1rem;
+        }
+
+        /* --- Testimonials --- */
+        #testimonials {
+            background-color: var(--white);
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .carousel {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .testimonial-slide {
+            display: none;
+            padding: 2rem;
+            animation: fadeIn 0.8s forwards;
+        }
+
+        .testimonial-slide.active {
+            display: block;
+        }
+
+        .stars {
+            color: var(--accent-gold);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .quote {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            margin-bottom: 2rem;
+            color: var(--primary-espresso);
+        }
+
+        .customer {
+            font-weight: 700;
+            color: var(--secondary-roast);
+        }
+
+        .customer span {
+            display: block;
+            font-weight: 400;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            margin-top: 0.3rem;
+            letter-spacing: 0.1em;
+        }
+
+        .dots {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 2rem;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #ddd;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .dot.active {
+            background-color: var(--accent-gold);
+            width: 20px;
+            border-radius: 4px;
+        }
+
+        /* --- Catering Section --- */
+        #catering {
+            background-color: var(--primary-espresso);
+            color: var(--bg-cream);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #catering::after {
+            content: "";
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border: 1px solid var(--accent-gold);
+            opacity: 0.2;
+            pointer-events: none;
+        }
+
+        #catering h2 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            margin-bottom: 1.5rem;
+        }
+
+        #catering p {
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+            opacity: 0.8;
+        }
+
+        /* --- Contact Section --- */
+        #contact {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 4rem;
+        }
+
+        @media (min-width: 1024px) {
+            #contact {
+                grid-template-columns: 1.2fr 0.8fr;
+            }
+        }
+
+        .contact-form {
+            background: var(--white);
+            padding: 3rem;
+            border-radius: 8px;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+            color: var(--secondary-roast);
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            background: var(--bg-cream);
+            font-family: inherit;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 0 4px rgba(196, 154, 60, 0.1);
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+        }
+
+        .info-item {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .info-icon {
+            color: var(--accent-gold);
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .info-content h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-content p {
+            color: var(--secondary-roast);
+            font-size: 0.95rem;
+        }
+
+        .socials {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .social-link {
+            color: var(--primary-espresso);
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            color: var(--accent-gold);
+            transform: translateY(-3px);
+        }
+
+        /* --- Footer --- */
+        footer {
+            background-color: var(--primary-espresso);
+            color: var(--bg-cream);
+            padding: 5rem 1.5rem 2rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto 4rem;
+        }
+
+        @media (min-width: 768px) {
+            .footer-grid {
+                grid-template-columns: 1.5fr 1fr 1fr;
+            }
+        }
+
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: block;
+            color: var(--bg-cream);
+            text-decoration: none;
+        }
+
+        .footer-tagline {
+            opacity: 0.6;
+            font-size: 0.9rem;
+            max-width: 250px;
+        }
+
+        .footer-links h4 {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-links h4::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 30px;
+            height: 1px;
+            background: var(--accent-gold);
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links ul li a {
+            color: var(--bg-cream);
+            text-decoration: none;
+            opacity: 0.6;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+
+        .footer-links ul li a:hover {
+            opacity: 1;
+            padding-left: 5px;
+            color: var(--accent-gold);
+        }
+
+        .copyright {
+            text-align: center;
+            border-top: 1px solid rgba(245, 239, 230, 0.1);
+            padding-top: 2rem;
+            font-size: 0.75rem;
+            opacity: 0.4;
+            letter-spacing: 0.05em;
+        }
+
+        /* --- Scroll Revel --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Custom Scrollbar --- */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-cream);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--secondary-roast);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-espresso);
+        }
+    </style>
+</head>
+<body class="grain">
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <a href="#hero" class="logo serif">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/><line x1="14" y1="2" x2="14" y2="4"/></svg>
+            E&L Coffeedent
+        </a>
+        <div class="nav-links">
+            <a href="#hero">Home</a>
+            <a href="#menu">Menu</a>
+            <a href="#story">Our Story</a>
+            <a href="#catering">Catering</a>
+            <a href="#contact">Contact</a>
+        </div>
+        <div class="nav-cta">
+            <a href="#contact" class="btn btn-primary">Order Now</a>
+        </div>
+        <div class="hamburger" id="navToggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#hero" class="mobile-link">Home</a>
+        <a href="#menu" class="mobile-link">Menu</a>
+        <a href="#story" class="mobile-link">Our Story</a>
+        <a href="#catering" class="mobile-link">Catering</a>
+        <a href="#contact" class="mobile-link">Contact</a>
+        <a href="#contact" class="btn btn-primary">Order Now</a>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="hero">
+        <div class="hero-content">
+            <h1 class="serif">Crafted with Love, Served with Soul</h1>
+            <p>Specialty coffee, handcrafted pastries, and a space that feels like home.</p>
+            <div class="hero-actions">
+                <a href="#menu" class="btn btn-primary">Explore Our Menu</a>
+                <a href="#story" class="btn btn-ghost">Our Story</a>
+            </div>
+        </div>
+        <div class="steam-container">
+            <div class="steam"></div>
+            <div class="steam" style="animation-delay: 1s;"></div>
+            <div class="steam" style="animation-delay: 2s;"></div>
+        </div>
+    </section>
+
+    <!-- Highlights Section -->
+    <section class="section-padding">
+        <div id="highlights">
+            <div class="highlight-card reveal">
+                <span class="highlight-icon">☕</span>
+                <h3>Specialty Brews</h3>
+                <p>Single-origin beans sourced from responsible farmers, expertly roasted and pulled to perfection.</p>
+            </div>
+            <div class="highlight-card reveal" style="transition-delay: 0.2s;">
+                <span class="highlight-icon">🥐</span>
+                <h3>Freshly Baked</h3>
+                <p>Our pastry chefs begin work before dawn to ensure every croissant and cake is warm and flaky when we open.</p>
+            </div>
+            <div class="highlight-card reveal" style="transition-delay: 0.4s;">
+                <span class="highlight-icon">🤝</span>
+                <h3>Community First</h3>
+                <p>More than just a café—a gathering place for creators, workers, and neighbors to connect and belong.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section id="menu" class="section-padding">
+        <div class="section-title reveal">
+            <h2>Our Artisanal Menu</h2>
+            <p>Handcrafted beverages and treats, prepared with precision and passion.</p>
+        </div>
+
+        <div class="tabs reveal">
+            <button class="tab-btn active" data-filter="all">All Items</button>
+            <button class="tab-btn" data-filter="popular">Popular</button>
+            <button class="tab-btn" data-filter="hot">Hot Coffee</button>
+            <button class="tab-btn" data-filter="iced">Coffee Based</button>
+            <button class="tab-btn" data-filter="matcha">Matcha</button>
+            <button class="tab-btn" data-filter="non_caffeine">Non-Caffein</button>
+            <button class="tab-btn" data-filter="refreshment">Refreshments</button>
+            <button class="tab-btn" data-filter="add_ons">Add Ons</button>
+        </div>
+
+        <div id="menuContainer" class="menu-grid reveal">
+            <!-- Dynamic Content -->
+        </div>
+    </section>
+
+    <!-- Our Story Section -->
+    <section id="story" class="section-padding">
+        <div class="story-visual reveal">
+            <div class="quote-block serif">
+                "We didn't just want to build a shop; we wanted to build a sanctuary."
+            </div>
+            <div style="width: 100%; height: 300px; background: linear-gradient(45deg, #7B5B3A, #2C1A0E); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white;">
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" style="opacity: 0.3;"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            </div>
+        </div>
+        <div class="story-text reveal">
+            <h2 class="serif" style="font-size: 3rem; margin-bottom: 2rem;">Born from a Passion for Coffee</h2>
+            <p>E&L Coffeedent began in a small apartment kitchen, where two friends, Elias and Luna, spent their weekends experimenting with roasting profiles and fermentation times. What started as a shared hobby quickly grew into a obsession with finding the "perfect cup"—the one that slows down time.</p>
+            <p>In 2021, that obsession became a reality in the heart of the city. We envisioned a space that combined the prestige of high-end specialty coffee with the warmth of a neighborhood living room. No snobbery, just soul.</p>
+            <p>Today, E&L Coffeedent is a small but dedicated team of artisans who believe that coffee is a medium for connection. Every bean is tracked, every pastry is hand-rolled, and every guest is treated like family. Welcome to our story.</p>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="section-padding">
+        <div class="section-title reveal">
+            <h2>What Our Guests Say</h2>
+        </div>
+        <div class="carousel reveal">
+            <div class="testimonial-slide active">
+                <div class="stars">★★★★★</div>
+                <p class="quote">"The best flat white I've had outside of Melbourne. The atmosphere is so calming, I often find myself finishing my work here much faster than at home."</p>
+                <div class="customer">Sofia Reyes <span>Freelance Writer</span></div>
+            </div>
+            <div class="testimonial-slide">
+                <div class="stars">★★★★★</div>
+                <p class="quote">"I come here every Saturday for the sourdough and cold brew. It's the highlight of my week. The staff knows my name and exactly how I like my coffee."</p>
+                <div class="customer">Marco Chen <span>Local Resident</span></div>
+            </div>
+            <div class="testimonial-slide">
+                <div class="stars">★★★★★</div>
+                <p class="quote">"Artisanal is an understatement. You can taste the care in every sip. Their seasonal single-origin pour-overs are simply out of this world."</p>
+                <div class="customer">Elena Vance <span>Coffee Enthusiast</span></div>
+            </div>
+            <div class="dots">
+                <div class="dot active" data-index="0"></div>
+                <div class="dot" data-index="1"></div>
+                <div class="dot" data-index="2"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Catering Section -->
+    <section id="catering" class="section-padding">
+        <div class="reveal">
+            <h2 class="serif">Hosting an Event? Let Us Handle the Coffee.</h2>
+            <p>From corporate meetings to intimate gatherings — we bring the café experience to you with our mobile brew stations and fresh pastry platters.</p>
+            <a href="#contact" class="btn btn-primary">Get a Quote</a>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section-padding">
+        <div class="contact-form reveal">
+            <h2 class="serif" style="margin-bottom: 2rem;">Say Hello</h2>
+            <form>
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" placeholder="Elias Coffee" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="hello@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" rows="5" placeholder="Tell us about your coffee needs..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
+            </form>
+        </div>
+        <div class="contact-info reveal" style="transition-delay: 0.2s;">
+            <div class="info-item">
+                <div class="info-icon">📍</div>
+                <div class="info-content">
+                    <h4>Our Location</h4>
+                    <p>123 Coffee St., Quezon City,<br>Metro Manila, Philippines</p>
+                </div>
+            </div>
+            <div class="info-item">
+                <div class="info-icon">📞</div>
+                <div class="info-content">
+                    <h4>Phone</h4>
+                    <p>+63 912 345 6789</p>
+                </div>
+            </div>
+            <div class="info-item">
+                <div class="info-icon">🕐</div>
+                <div class="info-content">
+                    <h4>Hours</h4>
+                    <p>Mon–Fri: 7AM – 8PM<br>Sat–Sun: 8AM – 9PM</p>
+                </div>
+            </div>
+            <div class="info-item">
+                <div class="info-icon">✨</div>
+                <div class="info-content">
+                    <h4>Follow Us</h4>
+                    <div class="socials">
+                        <a href="#" class="social-link" title="Instagram">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                        </a>
+                        <a href="#" class="social-link" title="Facebook">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                        </a>
+                        <a href="#" class="social-link" title="TikTok">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-grid">
+            <div>
+                <a href="#" class="footer-logo serif">E&L Coffeedent</a>
+                <p class="footer-tagline">Where Every Cup Tells a Story. Small batch coffee and artisanal heart since 2021.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#hero">Home</a></li>
+                    <li><a href="#menu">Menu</a></li>
+                    <li><a href="#story">Our Story</a></li>
+                    <li><a href="#catering">Catering</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Newsletter</h4>
+                <p style="font-size: 0.85rem; opacity: 0.6; margin-bottom: 1rem;">Join our brew club for secret recipes and news.</p>
+                <div style="display: flex; gap: 0.5rem;">
+                    <input type="email" placeholder="Your email" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 0.8rem; border-radius: 4px; color: white; width: 100%;">
+                </div>
+            </div>
+        </div>
+        <p class="copyright">© 2025 E&L Coffeedent. All rights reserved. Designed with love.</p>
+    </footer>
+
+    <script>
+        // --- Menu Logic ---
+        const menuData = [
+            // COFFEE BASED (HOT)
+            { name: "Brewed Coffee", prices: { "12oz": "₱65" }, category: "hot", icon: "☕", popular: true },
+            { name: "Capuccino", prices: { "12oz": "₱95" }, category: "hot", icon: "🥛" },
+            { name: "Spanish Latte", prices: { "12oz": "₱95" }, category: "hot", icon: "🇪🇸", popular: true },
+            { name: "Caramel Macchiato", prices: { "12oz": "₱95" }, category: "hot", icon: "🍯" },
+            { name: "Sea Salt Latte", prices: { "12oz": "₱95" }, category: "hot", icon: "🧂" },
+            { name: "Hot Chocolate", prices: { "12oz": "₱95" }, category: "hot", icon: "🍫" },
+
+            // COFFEE BASED (ICED)
+            { name: "Iced Americano", prices: { "16oz": "₱85", "20oz": "₱95" }, category: "iced", icon: "🧊" },
+            { name: "Spanish Latte", prices: { "16oz": "₱130", "20oz": "₱149" }, category: "iced", icon: "🥛", popular: true },
+            { name: "Caramel Macchiato", prices: { "16oz": "₱140", "20oz": "₱149" }, category: "iced", icon: "🍯" },
+            { name: "Salted Caramel", prices: { "16oz": "₱140", "20oz": "₱149" }, category: "iced", icon: "🧂" },
+            { name: "Sea Salt Latte", prices: { "16oz": "₱130", "20oz": "₱149" }, category: "iced", icon: "🌊" },
+            { name: "Vanilla Latte", prices: { "16oz": "₱110", "20oz": "₱130" }, category: "iced", icon: "🍦" },
+            { name: "Taro Latte", prices: { "16oz": "₱130", "20oz": "₱140" }, category: "iced", icon: "🟣" },
+            { name: "Iced Mocha Latte", prices: { "16oz": "₱130", "20oz": "₱140" }, category: "iced", icon: "🍫" },
+
+            // MATCHA
+            { name: "Pure Matcha", prices: { "16oz": "₱110", "20oz": "₱120" }, category: "matcha", icon: "🍵" },
+            { name: "Dirty Matcha", prices: { "16oz": "₱120", "20oz": "₱130" }, category: "matcha", icon: "☕" },
+            { name: "Strawberry Matcha", prices: { "16oz": "₱120", "20oz": "₱130" }, category: "matcha", icon: "🍓", popular: true },
+            { name: "Sea Salt Matcha", prices: { "16oz": "₱120", "20oz": "₱130" }, category: "matcha", icon: "🧂" },
+            { name: "Matcha Frappe", prices: { "16oz": "₱120", "20oz": "₱130" }, category: "matcha", icon: "🥤" },
+            { name: "Organic Matcha", prices: { "20oz": "₱230" }, category: "matcha", icon: "🌿" },
+
+            // NON CAFFEINE
+            { name: "Chocolate Frappe", prices: { "16oz": "₱85", "20oz": "₱95" }, category: "non_caffeine", icon: "🥤" },
+            { name: "Iced Chocolate", prices: { "16oz": "₱85", "20oz": "₱95" }, category: "non_caffeine", icon: "🍫" },
+            { name: "Dark Chocolate", prices: { "16oz": "₱85", "20oz": "₱95" }, category: "non_caffeine", icon: "🔳" },
+            { name: "White Chocolate", prices: { "16oz": "₱85", "20oz": "₱95" }, category: "non_caffeine", icon: "⬜" },
+            { name: "Taro Frappe", prices: { "16oz": "₱110", "20oz": "₱120" }, category: "non_caffeine", icon: "🟣" },
+            { name: "Caramel Frappe", prices: { "16oz": "₱110", "20oz": "₱120" }, category: "non_caffeine", icon: "🍯" },
+            { name: "Oreo", prices: { "16oz": "₱85", "20oz": "₱95" }, category: "non_caffeine", icon: "🍪", popular: true },
+            { name: "Strawberry Frappe", prices: { "16oz": "₱85", "20oz": "₱95" }, category: "non_caffeine", icon: "🍓" },
+            { name: "Strawberry Oreo", prices: { "16oz": "₱95", "20oz": "₱105" }, category: "non_caffeine", icon: "🥨" },
+            { name: "Strawberry Milk", prices: { "16oz": "₱85", "20oz": "₱95" }, category: "non_caffeine", icon: "🥛" },
+            { name: "Blueberry Milk", prices: { "16oz": "₱85", "20oz": "₱95" }, category: "non_caffeine", icon: "🫐" },
+
+            // REFRESHMENT
+            { name: "Strawberry Soda", prices: { "16oz": "₱55", "20oz": "₱65" }, category: "refreshment", icon: "🍓" },
+            { name: "Blueberry Soda", prices: { "16oz": "₱55", "20oz": "₱65" }, category: "refreshment", icon: "🫐" },
+            { name: "Grapes Soda", prices: { "16oz": "₱55", "20oz": "₱65" }, category: "refreshment", icon: "🍇" },
+            { name: "Green Apple", prices: { "16oz": "₱55", "20oz": "₱55" }, category: "refreshment", icon: "🍏" },
+            { name: "Alipio Drink", prices: { "16oz": "₱90", "20oz": "₱100" }, category: "refreshment", icon: "🍹", popular: true },
+
+            // ADD ONS
+            { name: "Extra Shot", prices: { "Add": "₱25" }, category: "add_ons", icon: "⚡" },
+            { name: "Whipped Cream", prices: { "Add": "₱10" }, category: "add_ons", icon: "☁️" },
+            { name: "Plus Jam", prices: { "Add": "₱10" }, category: "add_ons", icon: "🍎" },
+        ];
+
+        const menuContainer = document.getElementById('menuContainer');
+        const filterBtns = document.querySelectorAll('.tab-btn[data-filter]');
+
+        function renderMenu(filter = 'all') {
+            menuContainer.innerHTML = '';
+            
+            const filteredItems = menuData.filter(item => {
+                if (filter === 'all') return true;
+                if (filter === 'popular') return item.popular;
+                return item.category === filter;
+            });
+
+            filteredItems.forEach(item => {
+                const itemEl = document.createElement('div');
+                itemEl.className = `menu-item ${item.popular ? 'is-popular' : ''} reveal`;
+                
+                let pricesHtml = '';
+                for (const [size, price] of Object.entries(item.prices)) {
+                    pricesHtml += `
+                        <div class="price-tag">
+                            <span class="price-label">${size}</span>
+                            ${price}
+                        </div>
+                    `;
+                }
+
+                itemEl.innerHTML = `
+                    <div class="item-icon">${item.icon}</div>
+                    <div class="item-info">
+                        <h4 class="item-name serif">${item.name}</h4>
+                        <div class="item-prices">
+                            ${pricesHtml}
+                        </div>
+                    </div>
+                `;
+                menuContainer.appendChild(itemEl);
+                
+                // Trigger reveal for new items
+                setTimeout(() => itemEl.classList.add('active'), 10);
+            });
+        }
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const filter = btn.getAttribute('data-filter');
+                
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                renderMenu(filter);
+            });
+        });
+
+        // Initial render
+        renderMenu();
+
+        // --- Navigation Logic ---
+        const navbar = document.getElementById('navbar');
+        const navToggle = document.getElementById('navToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        navToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
+            // Animate hamburger to X (simple implementation)
+            const spans = navToggle.querySelectorAll('span');
+            spans[0].style.transform = mobileMenu.classList.contains('open') ? 'rotate(45deg) translate(5px, 6px)' : '';
+            spans[1].style.opacity = mobileMenu.classList.contains('open') ? '0' : '1';
+            spans[2].style.transform = mobileMenu.classList.contains('open') ? 'rotate(-45deg) translate(5px, -6px)' : '';
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('open');
+            });
+        });
+
+        // --- Carousel Logic ---
+        const slides = document.querySelectorAll('.testimonial-slide');
+        const dots = document.querySelectorAll('.dot');
+        let currentSlide = 0;
+
+        function showSlide(index) {
+            slides.forEach(s => s.classList.remove('active'));
+            dots.forEach(d => d.classList.remove('active'));
+            
+            slides[index].classList.add('active');
+            dots[index].classList.add('active');
+            currentSlide = index;
+        }
+
+        dots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                showSlide(parseInt(dot.getAttribute('data-index')));
+            });
+        });
+
+        // Auto-rotate
+        setInterval(() => {
+            let next = (currentSlide + 1) % slides.length;
+            showSlide(next);
+        }, 4000);
+
+        // --- Intersection Observer for Revealing elements ---
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => {
+            revealObserver.observe(el);
+        });
+
+        // --- Form Handling (Mock) ---
+        const form = document.querySelector('form');
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const btn = form.querySelector('button');
+            const originalText = btn.innerText;
+            btn.innerText = 'Sending...';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                btn.innerText = 'Message Sent!';
+                btn.style.backgroundColor = '#2C1A0E';
+                form.reset();
+                setTimeout(() => {
+                    btn.innerText = originalText;
+                    btn.style.backgroundColor = '';
+                    btn.disabled = false;
+                }, 3000);
+            }, 1500);
+        });
+    </script>
+</body>
+</html>
