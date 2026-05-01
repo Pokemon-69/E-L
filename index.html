@@ -75,14 +75,12 @@
             transform: translateY(-2px);
         }
 
-        .section-padding {
-            padding: 6rem 1.5rem;
-        }
-
-        @media (min-width: 1024px) {
-            .section-padding {
-                padding: 10rem 4rem;
-            }
+        .section-header {
+            max-width: 800px;
+            margin: 0 auto 5rem;
+            text-align: center;
+            position: relative;
+            z-index: 1;
         }
 
         /* --- Grain Texture Overlay --- */
@@ -756,6 +754,7 @@
             grid-template-columns: 1fr;
             gap: 4rem;
             align-items: center;
+            position: relative;
         }
 
         @media (min-width: 1024px) {
@@ -1158,14 +1157,14 @@
             <h1 class="serif">Crafted with Love, Served with Soul</h1>
             <p>Specialty coffee, handcrafted pastries, and a space that feels like home.</p>
             <div class="hero-actions">
-                <a href="#menu" class="btn btn-primary">Explore Our Menu</a>
+                <a href="#menu" class="btn btn-primary">Browse Menu</a>
                 <a href="#story" class="btn btn-ghost">Our Story</a>
             </div>
         </div>
         <div class="steam-container">
-            <div class="steam"></div>
-            <div class="steam" style="animation-delay: 1s;"></div>
-            <div class="steam" style="animation-delay: 2s;"></div>
+            <div class="steam" style="animation-delay: 0s"></div>
+            <div class="steam" style="animation-delay: 1s"></div>
+            <div class="steam" style="animation-delay: 2.5s"></div>
         </div>
     </section>
 
@@ -1294,21 +1293,21 @@
                 <div class="info-icon">📍</div>
                 <div class="info-content">
                     <h4>Our Location</h4>
-                    <p>123 Coffee St., Quezon City,<br>Metro Manila, Philippines</p>
+                    <p>Brgy. Solo, Mabini, Batangas</p>
                 </div>
             </div>
             <div class="info-item">
                 <div class="info-icon">📞</div>
                 <div class="info-content">
                     <h4>Phone</h4>
-                    <p>+63 912 345 6789</p>
+                    <p>0995-978-8093</p>
                 </div>
             </div>
             <div class="info-item">
                 <div class="info-icon">🕐</div>
                 <div class="info-content">
                     <h4>Hours</h4>
-                    <p>Mon–Fri: 7AM – 8PM<br>Sat–Sun: 8AM – 9PM</p>
+                    <p>Tues–Sunday: 2PM – 10PM<br>Closed on Mondays</p>
                 </div>
             </div>
             <div class="info-item">
