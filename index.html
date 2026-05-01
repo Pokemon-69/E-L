@@ -1145,74 +1145,6 @@
             color: var(--primary-espresso);
         }
 
-        /* --- Payment & Verification UI --- */
-        .qr-section {
-            text-align: center;
-            padding: 1.5rem;
-            background: #f9f9f9;
-            border-radius: 12px;
-            margin-top: 1rem;
-        }
-        .qr-image {
-            width: 220px;
-            height: 220px;
-            margin: 0 auto 1.5rem;
-            padding: 15px;
-            background: white;
-            border: 4px solid var(--primary-espresso);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-        }
-        .payment-instructions {
-            font-size: 0.9rem;
-            color: var(--secondary-roast);
-            margin-bottom: 1.5rem;
-            line-height: 1.6;
-        }
-        .payment-number {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--primary-espresso);
-            letter-spacing: 0.1em;
-            margin: 0.5rem 0;
-            display: block;
-        }
-        
-        .verification-status {
-            text-align: center;
-            padding: 3rem 1rem;
-        }
-        .loader {
-            width: 60px;
-            height: 60px;
-            border: 5px solid var(--bg-cream);
-            border-top: 5px solid var(--accent-gold);
-            border-radius: 50%;
-            margin: 0 auto 2rem;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        .success-icon {
-            width: 80px;
-            height: 80px;
-            background: #4CAF50;
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            margin: 0 auto 1.5rem;
-            box-shadow: 0 10px 25px rgba(76, 175, 80, 0.3);
-            animation: scaleIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        @keyframes scaleIn {
-            from { transform: scale(0); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-
         /* --- Delivery/Pickup Toggle --- */
         .order-type-selector {
             display: flex;
@@ -1344,78 +1276,29 @@
     <div class="modal-overlay" id="reviewModal">
         <div class="review-modal">
             <div class="review-header">
-                <h3 class="serif" id="modalTitle">Review Your Order</h3>
+                <h3 class="serif">Review Your Order</h3>
             </div>
             
-            <!-- Step 1: Review Items -->
-            <div id="step1Review">
-                <div class="review-body" id="reviewItemsContainer">
-                    <!-- Dynamic Items -->
+            <div class="review-body" id="reviewItemsContainer">
+                <!-- Dynamic Items -->
+            </div>
+            <div style="padding: 0 2rem;">
+                <div class="order-type-selector">
+                    <button class="order-type-btn active" id="pickupOption">Pick Up</button>
+                    <button class="order-type-btn" id="deliveryOption">Delivery</button>
                 </div>
-                <div style="padding: 0 2rem;">
-                    <div class="order-type-selector">
-                        <button class="order-type-btn active" id="pickupOption">Pick Up</button>
-                        <button class="order-type-btn" id="deliveryOption">Delivery</button>
-                    </div>
-                    <div class="location-field" id="deliveryAddressContainer">
-                        <textarea id="deliveryAddress" placeholder="Enter your delivery address..." rows="3"></textarea>
-                    </div>
-                </div>
-                <div class="review-footer">
-                    <div class="review-total">
-                        <span>Grand Total</span>
-                        <span id="reviewTotalAmount">₱0</span>
-                    </div>
-                    <div style="display: flex; gap: 1rem;">
-                        <button id="backToCartBtn" class="btn btn-ghost" style="flex: 1; border-color: var(--primary-espresso); color: var(--primary-espresso);">Edit Cart</button>
-                        <button id="proceedToPayBtn" class="btn btn-primary" style="flex: 1;">Place Order & Pay</button>
-                    </div>
+                <div class="location-field" id="deliveryAddressContainer">
+                    <textarea id="deliveryAddress" placeholder="Enter your delivery address..." rows="3"></textarea>
                 </div>
             </div>
-
-            <!-- Step 2: Payment (QR Code) -->
-            <div id="step2Payment" style="display: none;">
-                <div class="review-body">
-                    <p class="payment-instructions">
-                        Scan the QR code with your preferred app (GCash/Maya) to settle your payment. Our system will automatically confirm once received.
-                    </p>
-                    <div class="qr-section">
-                        <div class="qr-image">
-                            <svg viewBox="0 0 100 100" fill="currentColor">
-                                <path d="M10 10h30v30h-30zM15 15h20v20h-20zM60 10h30v30h-30zM65 15h20v20h-20zM10 60h30v30h-30zM15 65h20v20h-20zM45 10h10v10h-10zM10 45h10v10h-10zM45 45h10v10h-10zM60 45h10v10h-10zM45 60h10v10h-10zM60 60h10v10h-10zM75 45h10v10h-10zM75 60h10v10h-10zM45 75h10v10h-10zM60 75h10v10h-10zM75 75h30v30h-30zM80 80h10v10h-10zM75 10h15v5h-15zM10 75h5v15h-5zM90 75h5v15h-5zM75 90h15v5h-15z"/>
-                                <text x="50" y="55" font-size="6" text-anchor="middle" font-weight="bold" fill="#2C1A0E">QR Ph</text>
-                            </svg>
-                        </div>
-                        <span class="payment-number">09684262235</span>
-                        <p style="font-size: 0.75rem; color: #888;">(JOSHUA ANDREI N.)</p>
-                    </div>
+            <div class="review-footer">
+                <div class="review-total">
+                    <span>Grand Total</span>
+                    <span id="reviewTotalAmount">₱0</span>
                 </div>
-                <div class="review-footer">
-                    <button id="simulatePaymentBtn" class="btn btn-primary" style="width: 100%;">I Have Sent Payment</button>
-                    <button id="backToReviewLink" class="btn btn-ghost" style="width: 100%; border: none; color: var(--secondary-roast); font-size: 0.8rem;">Change Selection</button>
-                </div>
-            </div>
-
-            <!-- Step 3: Verification (Simulated) -->
-            <div id="step3Verification" style="display: none;">
-                <div class="review-body">
-                    <div class="verification-status">
-                        <div class="loader"></div>
-                        <h4 class="serif" style="font-size: 1.5rem; margin-bottom: 0.5rem;">Authenticating...</h4>
-                        <p style="color: var(--secondary-roast);">Our system is automatically verifying your transaction. Please do not close this window.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Step 4: Success Message -->
-            <div id="step4Success" style="display: none;">
-                <div class="review-body">
-                    <div class="verification-status">
-                        <div class="success-icon">✓</div>
-                        <h4 class="serif" style="font-size: 1.8rem; margin-bottom: 1rem;">Payment Verified!</h4>
-                        <p style="color: var(--secondary-roast); margin-bottom: 2rem;">Your payment has been successfully received. You'll see a success message when your payment is verified — and here it is!</p>
-                        <button id="finalizeOrderBtn" class="btn btn-primary" style="width: 100%;">Complete Order Details</button>
-                    </div>
+                <div style="display: flex; gap: 1rem;">
+                    <button id="backToCartBtn" class="btn btn-ghost" style="flex: 1; border-color: var(--primary-espresso); color: var(--primary-espresso);">Edit Order</button>
+                    <button id="confirmOrderBtn" class="btn btn-primary" style="flex: 1;">Confirm Order</button>
                 </div>
             </div>
         </div>
@@ -1924,20 +1807,10 @@
         const reviewModal = document.getElementById('reviewModal');
         const reviewItemsContainer = document.getElementById('reviewItemsContainer');
         const reviewTotalAmount = document.getElementById('reviewTotalAmount');
-        const modalTitle = document.getElementById('modalTitle');
-        
-        // Modal Steps
-        const step1Review = document.getElementById('step1Review');
-        const step2Payment = document.getElementById('step2Payment');
-        const step3Verification = document.getElementById('step3Verification');
-        const step4Success = document.getElementById('step4Success');
         
         // Modal Buttons
         const backToCartBtn = document.getElementById('backToCartBtn');
-        const proceedToPayBtn = document.getElementById('proceedToPayBtn');
-        const simulatePaymentBtn = document.getElementById('simulatePaymentBtn');
-        const backToReviewLink = document.getElementById('backToReviewLink');
-        const finalizeOrderBtn = document.getElementById('finalizeOrderBtn');
+        const confirmOrderBtn = document.getElementById('confirmOrderBtn');
         
         // Delivery/Pickup Elements
         const pickupOption = document.getElementById('pickupOption');
@@ -1966,39 +1839,9 @@
                 return;
             }
             
-            // Show review modal, reset to step 1
+            // Show review modal
             renderReview();
-            showStep('step1Review');
-            modalTitle.innerText = 'Review Your Order';
             reviewModal.classList.add('open');
-        });
-
-        function showStep(stepId) {
-            [step1Review, step2Payment, step3Verification, step4Success].forEach(step => {
-                step.style.display = 'none';
-            });
-            document.getElementById(stepId).style.display = 'block';
-        }
-
-        proceedToPayBtn.addEventListener('click', () => {
-            showStep('step2Payment');
-            modalTitle.innerText = 'Secure Payment';
-        });
-
-        backToReviewLink.addEventListener('click', () => {
-            showStep('step1Review');
-            modalTitle.innerText = 'Review Your Order';
-        });
-
-        simulatePaymentBtn.addEventListener('click', () => {
-            showStep('step3Verification');
-            modalTitle.innerText = 'Verifying Transaction...';
-            
-            // Simulate Automatic Verification after 3 seconds
-            setTimeout(() => {
-                showStep('step4Success');
-                modalTitle.innerText = 'Order Confirmed';
-            }, 3000);
         });
 
         function renderReview() {
@@ -2036,16 +1879,15 @@
             reviewModal.classList.remove('open');
         });
 
-        finalizeOrderBtn.addEventListener('click', () => {
+        confirmOrderBtn.addEventListener('click', () => {
             // Populate contact form message with order details
-            let orderSummary = "PROCESSED & PAID ORDER:\n\n";
-            orderSummary += "Payment Status: Verified Via QR Ph\n";
+            let orderSummary = "Order Summary:\n\n";
             orderSummary += `Order Type: ${orderType}\n`;
             if (orderType === 'Delivery') {
                 orderSummary += `Delivery Address: ${deliveryAddressInput.value || 'Not provided'}\n`;
             }
-            orderSummary += `Payment Total: ${reviewTotalAmount.innerText}\n\n`;
-            orderSummary += "Order Summary:\n";
+            orderSummary += `Total: ${reviewTotalAmount.innerText}\n\n`;
+            orderSummary += "Items:\n";
             cart.forEach(item => {
                 const addonsPrice = item.addons ? item.addons.reduce((sum, a) => sum + (a.price * a.qty), 0) : 0;
                 const unitPrice = item.basePrice + addonsPrice;
