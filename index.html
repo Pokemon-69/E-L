@@ -1298,7 +1298,7 @@
                 </div>
                 <div style="display: flex; gap: 1rem;">
                     <button id="backToCartBtn" class="btn btn-ghost" style="flex: 1; border-color: var(--primary-espresso); color: var(--primary-espresso);">Edit Order</button>
-                    <button id="confirmOrderBtn" class="btn btn-primary" style="flex: 1;">Confirm Order</button>
+                    <button id="confirmOrderBtn" class="btn btn-primary" style="flex: 1;">Order via Facebook</button>
                 </div>
             </div>
         </div>
@@ -1423,23 +1423,13 @@
 
     <!-- Contact Section -->
     <section id="contact" class="section-padding">
-        <div class="contact-form reveal">
-            <h2 class="serif" style="margin-bottom: 2rem;">Say Hello</h2>
-            <form>
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" id="name" placeholder="Elias Coffee" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" placeholder="hello@example.com" required>
-                </div>
-                <div class="form-group">
-                    <label for="message">Message</label>
-                    <textarea id="message" rows="5" placeholder="Tell us about your coffee needs..."></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
-            </form>
+        <div class="contact-form reveal" style="text-align: center; background: var(--primary-espresso); color: var(--bg-cream); display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 3rem;">
+            <h2 class="serif" style="margin-bottom: 1.5rem; color: var(--bg-cream);">Connect with Us</h2>
+            <p style="margin-bottom: 2.5rem; opacity: 0.9; max-width: 400px;">Have a question or want to place an order? Message us directly on Facebook for the fastest response!</p>
+            <a href="https://m.me/61579083565592" target="_blank" class="btn btn-primary" style="padding: 1rem 3rem; font-size: 1.2rem; background: var(--bg-cream); color: var(--primary-espresso);">Message on Messenger</a>
+            <p style="margin-top: 1.5rem; font-size: 0.9rem;">
+                Or visit our <a href="https://www.facebook.com/people/EL-CoffeeDent/61579083565592/" target="_blank" style="color: var(--accent-gold); text-decoration: underline;">Facebook Page</a>
+            </p>
         </div>
         <div class="contact-info reveal" style="transition-delay: 0.2s;">
             <div class="info-item">
@@ -1880,8 +1870,8 @@
         });
 
         confirmOrderBtn.addEventListener('click', () => {
-            // Populate contact form message with order details
-            let orderSummary = "Order Summary:\n\n";
+            // Generate order summary for Facebook
+            let orderSummary = "NEW ORDER FROM WEBSITE:\n\n";
             orderSummary += `Order Type: ${orderType}\n`;
             if (orderType === 'Delivery') {
                 orderSummary += `Delivery Address: ${deliveryAddressInput.value || 'Not provided'}\n`;
@@ -1899,15 +1889,23 @@
                 orderSummary += itemStr;
             });
             
-            document.getElementById('message').value = orderSummary;
+            // Encode for URL
+            const fbUrl = `https://m.me/61579083565592`;
+            
+            // It's hard to pre-fill Facebook messages via URL for security/privacy.
+            // We'll show a message and copy the summary to clipboard if possible, then redirect.
+            
+            navigator.clipboard.writeText(orderSummary).then(() => {
+                alert("Order summary copied to clipboard! You are being redirected to our Facebook Messenger. Please paste your order details there to complete your order.");
+                window.open(fbUrl, '_blank');
+            }).catch(err => {
+                console.error('Could not copy text: ', err);
+                alert("You are being redirected to our Facebook Messenger. Please tell us your order there!");
+                window.open(fbUrl, '_blank');
+            });
+
             reviewModal.classList.remove('open');
             closeCart();
-            document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
-            
-            // Focus on contact name
-            setTimeout(() => {
-                document.getElementById('name').focus();
-            }, 600);
         });
 
         // Update cart badge initially
@@ -1993,41 +1991,6 @@
 
         document.querySelectorAll('.reveal').forEach(el => {
             revealObserver.observe(el);
-        });
-
-        // --- Form Handling ---
-        const form = document.querySelector('form');
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const message = document.getElementById('message').value;
-            const recipient = "02napajoshua@gmail.com";
-            
-            const subject = `Message from ${name} via E&L CoffeeDent`;
-            const body = `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`;
-            
-            const mailtoUrl = `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-            
-            // Redirect to mailto
-            window.location.href = mailtoUrl;
-
-            const btn = form.querySelector('button');
-            const originalText = btn.innerText;
-            btn.innerText = 'Redirecting to Email...';
-            btn.disabled = true;
-            
-            setTimeout(() => {
-                btn.innerText = 'Draft Created!';
-                btn.style.backgroundColor = '#2C1A0E';
-                form.reset();
-                setTimeout(() => {
-                    btn.innerText = originalText;
-                    btn.style.backgroundColor = '';
-                    btn.disabled = false;
-                }, 3000);
-            }, 1000);
         });
     </script>
 </body>
